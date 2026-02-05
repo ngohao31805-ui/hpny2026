@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+
+    /* BACKGROUND ẢNH */
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
+        url("./nen-tet.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 60px;
+    margin: 0;
+    color: gold;
+    text-shadow: 0 0 20px gold;
+    animation: glow 2s infinite alternate;
+}
+
+p {
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px 28px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ffcc00, #ff6600);
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 0 15px #ff9900;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px gold;
+    }
+
+    to {
+        text-shadow: 0 0 30px orange;
+    }
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}

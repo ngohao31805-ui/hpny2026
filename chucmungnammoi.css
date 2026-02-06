@@ -81,6 +81,9 @@ canvas {
 /* ===== PHONG BÌ LÌ XÌ VIỆT NAM ===== */
 .lixi {
     position: fixed;
+    left: -120px;
+    /* 🔥 QUAN TRỌNG: điểm bắt đầu */
+    top: 30%;
     width: 90px;
     height: 130px;
     background: linear-gradient(180deg, #d50000, #b71c1c);
@@ -90,13 +93,15 @@ canvas {
         inset 0 0 0 3px gold;
     cursor: pointer;
     z-index: 3;
-    animation: flyLixi 12s linear forwards;
+    animation: flyLixi linear forwards;
+    animation-duration: 12s;
+    /* fallback nếu JS lỗi */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Segoe UI', sans-serif;
 }
+
 
 /* Viền hoa văn */
 .lixi::before {

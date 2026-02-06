@@ -13,21 +13,18 @@
     <canvas id="fireworks"></canvas>
 
     <div class="center">
-        <h1>🎆CHÚC MỪNG NĂM MỚI🎆
-            2026
-        </h1>
+        <h1>🎆CHÚC MỪNG NĂM MỚI🎆</h1>
+        <h2>2026</h2>
         <p>Chúc bạn một năm mới bình an – hạnh phúc – thành công ❤️</p>
-        <button onclick="playMusic()">▶ Phát nhạc</button>
-        <button onclick="toggleMusic()">⏸ Tạm dừng</button>
-        <div style="margin-top:15px;">
+        <!-- <div style="margin-top:15px;">
             🔊 Âm lượng
             <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="setVolume(this.value)">
-        </div>
+        </div> -->
     </div>
 
 
     <!-- Nhạc nền -->
-    <audio id="music" loop>
+    <audio id="music" loop preload="auto">
         <source src="Trúc Nhân _ VẠN SỰ NHƯ Ý _ Official MV.mp3" type="audio/mpeg">
     </audio>
     <audio id="fireworkSound">
@@ -38,30 +35,27 @@
     <script>
         /* Phát nhạc */
         const music = document.getElementById("music");
-        let isPlaying = false;
+        music.volume = 0.1;
 
-        function playMusic() {
-            music.volume = 0.15;
-            music.play();
-            isPlaying = true;
-        }
+        let musicStarted = false;
 
-        function toggleMusic() {
-            if (isPlaying) {
-                music.pause();
-                isPlaying = false;
-            } else {
-                music.play();
-                isPlaying = true;
+        function startMusicOnce() {
+            if (!musicStarted) {
+                music.play().catch(() => { });
+                musicStarted = true;
             }
         }
 
-        function setVolume(value) {
-            music.volume = value;
-        }
+        // Chỉ cần click / chạm 1 lần bất kỳ
+        document.addEventListener("click", startMusicOnce);
+        document.addEventListener("touchstart", startMusicOnce);
+
+        // function setVolume(value) {
+        //     music.volume = value;
+        // }
 
         const fireworkSound = document.getElementById("fireworkSound");
-        fireworkSound.volume = 0.1; // âm lượng pháo hoa
+        fireworkSound.volume = 0.08; // âm lượng pháo hoa
 
 
 
@@ -120,7 +114,70 @@
 
         setInterval(createFirework, 1200);
         animate();
+
+        const wishes = [
+            "Chúc năm mới An Khang – Thịnh Vượng 🧧",
+            "Vạn sự như ý – Tấn tài tấn lộc 💰",
+            "Gia đình hạnh phúc – Sức khỏe dồi dào ❤️",
+            "Học hành tiến bộ – Công việc hanh thông ✨",
+            "Tiền vào như nước – Lộc đến đầy nhà 🌸",
+            "Năm mới nhiều cơ hội - nhiều thành công",
+            "Xuân sang rộn ràng - cười hoài không chán",
+            "Tết đến xuân về - mọi điều tốt đẹp"
+        ];
+
+        function createLixi() {
+            const lixi = document.createElement("div");
+            lixi.className = "lixi";
+
+            lixi.style.top = Math.random() * 65 + 10 + "%";
+            lixi.style.animationDuration = (10 + Math.random() * 6) + "s";
+
+            // Chữ trên phong bì
+            const words = ["LỘC", "PHÚC", "TÀI", "PHÁT"];
+            const text = document.createElement("span");
+            text.innerText = words[Math.floor(Math.random() * words.length)];
+
+            const knot = document.createElement("div");
+            knot.className = "knot";
+
+            lixi.appendChild(text);
+            lixi.appendChild(knot);
+
+            const wish = wishes[Math.floor(Math.random() * wishes.length)];
+            lixi.onclick = () => openLixi(wish);
+
+            document.body.appendChild(lixi);
+            setTimeout(() => lixi.remove(), 18000);
+        }
+
+
+        /* Phong bì lì xì bay liên tục */
+        setInterval(createLixi, 3500);
+
+        /* ===== MỞ / ĐÓNG POPUP LÌ XÌ ===== */
+        function openLixi(text) {
+            const popup = document.getElementById("lixi-popup");
+            const content = document.getElementById("lixi-text");
+
+            content.innerText = text;
+            popup.style.display = "flex";
+        }
+
+        function closeLixi() {
+            document.getElementById("lixi-popup").style.display = "none";
+        }
+
+
     </script>
+
+    <div id="lixi-popup" class="lixi-popup" onclick="closeLixi()">
+        <div class="lixi-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeLixi()">✖</span>
+            <h2>🧧 Lời Chúc Năm Mới</h2>
+            <p id="lixi-text"></p>
+        </div>
+    </div>
 
 </body>
 

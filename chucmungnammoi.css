@@ -114,14 +114,29 @@ canvas {
 
 /* Chữ LỘC */
 .lixi span {
-    font-size: 34px;
+    font-size: 32px;
+    /* nhỏ lại xíu cho đẹp */
     font-weight: 900;
-    letter-spacing: 2px;
     color: gold;
+
+    white-space: nowrap;
+    /* 🔥 KHÔNG cho xuống dòng */
+    line-height: 1;
+    /* 🔥 chặn chữ rơi dọc */
+    letter-spacing: 1px;
+
+    text-align: center;
+    writing-mode: horizontal-tb;
+    /* 🔥 ép chữ nằm ngang */
+
     text-shadow:
-        0 0 10px gold,
-        0 0 20px orange;
+        2px 2px 0 #b71c1c,
+        -2px 2px 0 #b71c1c,
+        2px -2px 0 #b71c1c,
+        -2px -2px 0 #b71c1c,
+        0 0 10px gold;
 }
+
 
 
 /* Dây buộc phong bì */

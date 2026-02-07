@@ -249,16 +249,21 @@ canvas {
     justify-content: center;
     align-items: center;
     z-index: 10;
+    pointer-events: auto;
 }
 
 #countdown-number {
     font-size: 120px;
     font-weight: 900;
     color: gold;
-    margin-top: 20px;
+    margin: 0;
+    /* 🔥 FIX lệch */
+    padding: 0;
+    line-height: 1;
     text-shadow: 0 0 30px gold;
     display: none;
 }
+
 
 /* ===== WORD EFFECT ===== */
 #word-screen {
@@ -308,6 +313,8 @@ canvas {
     color: #b71c1c;
     box-shadow: 0 0 25px gold;
     animation: pulse 1.5s infinite;
+    pointer-events: auto;
+    z-index: 11;
 }
 
 @keyframes pulse {

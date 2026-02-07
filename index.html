@@ -198,8 +198,12 @@
 
             /* BẤM START */
             startBtn.onclick = () => {
+                // 🔥 BẮT NHẠC NGAY TẠI ĐÂY (hợp lệ trên mobile)
+                startMusicOnce();
+
                 startBtn.style.display = "none";
                 countdownNumber.style.display = "block";
+
 
                 count = 3;
                 countdownNumber.innerText = count;
@@ -248,8 +252,8 @@
                 // hiện nội dung chính
                 mainCenter.style.display = "flex";
 
-                // 🎵 nhạc
-                startMusicOnce();
+                // // 🎵 nhạc
+                // startMusicOnce();
 
                 // 🎆 pháo hoa
                 animate();

@@ -238,3 +238,88 @@ canvas {
     top: 15px;
     cursor: pointer;
 }
+
+/* ===== COUNTDOWN ===== */
+#countdown-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#countdown-number {
+    font-size: 120px;
+    font-weight: 900;
+    color: gold;
+    margin-top: 20px;
+    text-shadow: 0 0 30px gold;
+    display: none;
+}
+
+/* ===== WORD EFFECT ===== */
+#word-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+}
+
+#word {
+    font-size: clamp(48px, 10vw, 120px);
+    font-weight: 900;
+    color: gold;
+    opacity: 0;
+}
+
+/* Animation chữ */
+@keyframes fadeWord {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+/* ===== START BUTTON ===== */
+#start-btn {
+    padding: 18px 40px;
+    font-size: 26px;
+    font-weight: 900;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: linear-gradient(45deg, gold, orange);
+    color: #b71c1c;
+    box-shadow: 0 0 25px gold;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

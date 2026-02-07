@@ -12,6 +12,20 @@
 
     <canvas id="fireworks"></canvas>
 
+    <!-- COUNTDOWN SCREEN -->
+    <div id="countdown-screen">
+        <button id="start-btn">🎉 START 🎉</button>
+        <div id="countdown-number">3</div>
+    </div>
+
+    <!-- WORD SCREEN -->
+    <div id="word-screen">
+        <div id="word"></div>
+    </div>
+
+
+
+
     <div class="center">
         <h1 class="title">🎆 CHÚC MỪNG NĂM MỚI 🎆</h1>
         <h2 class="year">2026</h2>
@@ -32,6 +46,9 @@
 
 
     <script>
+        let fireworkInterval = null;
+        let lixiInterval = null;
+
         /* Phát nhạc */
         const music = document.getElementById("music");
         music.volume = 0.1;
@@ -45,9 +62,6 @@
             }
         }
 
-        // Chỉ cần click / chạm 1 lần bất kỳ
-        document.addEventListener("click", startMusicOnce);
-        document.addEventListener("touchstart", startMusicOnce);
 
         const fireworkSound = document.getElementById("fireworkSound");
         fireworkSound.volume = 0.08; // âm lượng pháo hoa
@@ -107,8 +121,8 @@
         }
 
 
-        setInterval(createFirework, 1200);
-        animate();
+        // setInterval(createFirework, 1200);
+        // animate();
 
         const wishes = [
             "Chúc năm mới An Khang – Thịnh Vượng 🧧",
@@ -150,7 +164,7 @@
 
 
         /* Phong bì lì xì bay liên tục */
-        setInterval(createLixi, 3500);
+        // setInterval(createLixi, 3500);
 
         /* ===== MỞ / ĐÓNG POPUP LÌ XÌ ===== */
         function openLixi(text) {
@@ -165,7 +179,82 @@
             document.getElementById("lixi-popup").style.display = "none";
         }
 
+        /* ===== COUNTDOWN + WORD FLOW ===== */
+        document.addEventListener("DOMContentLoaded", () => {
 
+            const countdownScreen = document.getElementById("countdown-screen");
+            const countdownNumber = document.getElementById("countdown-number");
+            const startBtn = document.getElementById("start-btn");
+
+            const wordScreen = document.getElementById("word-screen");
+            const wordDiv = document.getElementById("word");
+            const mainCenter = document.querySelector(".center");
+
+            mainCenter.style.display = "none";
+            wordScreen.style.display = "none";
+
+            let count = 3;
+            let countdownTimer = null;
+
+            /* BẤM START */
+            startBtn.onclick = () => {
+                startBtn.style.display = "none";
+                countdownNumber.style.display = "block";
+                countdownNumber.innerText = count;
+
+                countdownTimer = setInterval(() => {
+                    count--;
+                    countdownNumber.innerText = count;
+
+                    if (count === 0) {
+                        clearInterval(countdownTimer);
+                        countdownScreen.style.display = "none";
+                        startWords();
+                    }
+                }, 1000);
+            };
+
+            /* ===== HIỆU ỨNG CHỮ ===== */
+            const words = ["CHÚC", "MỪNG", "NĂM", "MỚI"];
+            let index = 0;
+
+            function startWords() {
+                wordScreen.style.display = "flex";
+                showWord();
+            }
+
+            function showWord() {
+                if (index >= words.length) {
+                    wordScreen.style.display = "none";
+                    startMainPage();
+                    return;
+                }
+
+                wordDiv.innerText = words[index];
+                wordDiv.style.animation = "none";
+                wordDiv.offsetHeight;
+                wordDiv.style.animation = "fadeWord 1s ease forwards";
+
+                index++;
+                setTimeout(showWord, 1200);
+            }
+
+            /* ===== VÀO TRANG CHÍNH ===== */
+            function startMainPage() {
+                // hiện nội dung chính
+                mainCenter.style.display = "flex";
+
+                // 🎵 nhạc
+                startMusicOnce();
+
+                // 🎆 pháo hoa
+                animate();
+                fireworkInterval = setInterval(createFirework, 1200);
+
+                // 🧧 lì xì
+                lixiInterval = setInterval(createLixi, 3500);
+            }
+        });
     </script>
 
     <div id="lixi-popup" class="lixi-popup" onclick="closeLixi()">

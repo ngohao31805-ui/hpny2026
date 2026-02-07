@@ -55,12 +55,25 @@
 
         let musicStarted = false;
 
-        function startMusicOnce() {
-            if (!musicStarted) {
-                music.play().catch(() => { });
-                musicStarted = true;
+        let musicUnlocked = false;
+
+        function unlockMusic() {
+            if (!musicUnlocked) {
+                // play + pause cực nhanh để unlock autoplay mobile
+                music.play().then(() => {
+                    music.pause();
+                    music.currentTime = 0;
+                    musicUnlocked = true;
+                }).catch(() => { });
             }
         }
+
+        function playMusic() {
+            if (musicUnlocked) {
+                music.play().catch(() => { });
+            }
+        }
+
 
 
         const fireworkSound = document.getElementById("fireworkSound");
@@ -199,7 +212,7 @@
             /* BẤM START */
             startBtn.onclick = () => {
                 // 🔥 BẮT NHẠC NGAY TẠI ĐÂY (hợp lệ trên mobile)
-                startMusicOnce();
+                unlockMusic(); // 🔓 chỉ unlock, CHƯA phát
 
                 startBtn.style.display = "none";
                 countdownNumber.style.display = "block";
@@ -254,6 +267,8 @@
 
                 // // 🎵 nhạc
                 // startMusicOnce();
+
+                playMusic();
 
                 // 🎆 pháo hoa
                 animate();

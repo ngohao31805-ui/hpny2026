@@ -51,7 +51,7 @@
 
     <!-- Âm thanh chúc mừng năm mới -->
     <audio id="happyNewYearSound">
-        <source src="happy-new-year.mp3" type="audio/mpeg">
+        <source src="snaptt (mp3cut.net).mp3" type="audio/mpeg">
     </audio>
 
 
@@ -258,28 +258,43 @@
 
 
             /* ===== HIỆU ỨNG CHỮ ===== */
-            const words = ["CHÚC", "MỪNG", "NĂM", "MỚI"];
-            let index = 0;
+            const words = ["HAPPY", "NEW", "YEAR"];
+            const wordTimings = [0.05, 0.60, 1.15]; // ⏱ canh theo sound (giây)
+            let wordIndex = 0;
 
             function startWords() {
                 wordScreen.style.display = "flex";
-                showWord();
+                wordIndex = 0;
+
+                happySound.currentTime = 0;
+                happySound.play().catch(() => { });
+
+                // reset
+                wordDiv.innerText = "";
+
+                // theo dõi audio realtime
+                const sync = setInterval(() => {
+                    if (wordIndex < words.length &&
+                        happySound.currentTime >= wordTimings[wordIndex]) {
+
+                        showWord(words[wordIndex]);
+                        wordIndex++;
+                    }
+
+                    // khi sound gần hết → vào trang chính
+                    if (happySound.currentTime >= 2.3) {
+                        clearInterval(sync);
+                        wordScreen.style.display = "none";
+                        startMainPage();
+                    }
+                }, 30);
             }
 
-            function showWord() {
-                if (index >= words.length) {
-                    wordScreen.style.display = "none";
-                    startMainPage();
-                    return;
-                }
-
-                wordDiv.innerText = words[index];
+            function showWord(text) {
+                wordDiv.innerText = text;
                 wordDiv.style.animation = "none";
                 wordDiv.offsetHeight;
-                wordDiv.style.animation = "fadeWord 1s ease forwards";
-
-                index++;
-                setTimeout(showWord, 1200);
+                wordDiv.style.animation = "fadeWord 0.5s ease forwards";
             }
 
             /* ===== VÀO TRANG CHÍNH ===== */

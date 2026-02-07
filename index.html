@@ -62,21 +62,21 @@
         /* Phát nhạc */
         const music = document.getElementById("music");
         music.volume = 0.1;
-        music.muted = true;   // 🔒 KHÓA TIẾNG BAN ĐẦU
-        let musicUnlocked = false;
+        music.muted = true;   // luôn mute lúc đầu
+        let musicStarted = false;
 
-        function unlockMusic() {
-            if (!musicUnlocked) {
-                music.muted = true; // vẫn mute
-                musicUnlocked = true;
+        // play sớm để unlock mobile
+        function startMusicMuted() {
+            if (!musicStarted) {
+                music.currentTime = 0;
+                music.muted = true;
+                music.play().catch(() => { });
+                musicStarted = true;
             }
         }
 
-        function playMusic() {
-            if (musicUnlocked) {
-                music.muted = false; // 🔓 MỞ TIẾNG
-                music.play().catch(() => { });
-            }
+        function unmuteMusic() {
+            music.muted = false;
         }
 
 
@@ -223,7 +223,9 @@
 
             /* BẤM START */
             startBtn.onclick = () => {
-                unlockMusic();
+
+                // 🔓 unlock nhạc mobile NGAY LÚC CLICK
+                startMusicMuted();
 
                 startBtn.style.display = "none";
                 countdownNumber.style.display = "block";
@@ -231,7 +233,7 @@
                 count = 3;
                 countdownNumber.innerText = count;
 
-                // 🔊 PHÁT ÂM COUNTDOWN 1 LẦN DUY NHẤT
+                // 🔊 sound countdown
                 countSound.currentTime = 0;
                 countSound.play().catch(() => { });
 
@@ -242,10 +244,9 @@
                         countdownNumber.innerText = count;
                     } else {
                         clearInterval(countdownTimer);
-
                         countdownScreen.style.display = "none";
 
-                        // 🔊 tiếng chúc mừng
+                        // 🔊 sound HAPPY NEW YEAR
                         happySound.currentTime = 0;
                         happySound.play().catch(() => { });
 
@@ -253,9 +254,6 @@
                     }
                 }, 1000);
             };
-
-
-
 
             /* ===== HIỆU ỨNG CHỮ ===== */
             const words = ["HAPPY", "NEW", "YEAR"];
@@ -299,13 +297,10 @@
 
             /* ===== VÀO TRANG CHÍNH ===== */
             function startMainPage() {
-                // hiện nội dung chính
                 mainCenter.style.display = "flex";
 
-                // // 🎵 nhạc
-                // startMusicOnce();
-
-                playMusic();
+                // 🔊 MỞ TIẾNG NHẠC NỀN Ở TRANG CHÍNH
+                unmuteMusic();
 
                 // 🎆 pháo hoa
                 animate();

@@ -331,3 +331,27 @@ canvas {
         transform: scale(1);
     }
 }
+
+/* ===== MUSIC INFO ===== */
+#music-info {
+    position: fixed;
+    right: 14px;
+    bottom: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 215, 0, 0.9);
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+/* mobile nhỏ hơn chút */
+@media (max-width: 600px) {
+    #music-info {
+        font-size: 12px;
+        right: 10px;
+        bottom: 10px;
+    }
+}

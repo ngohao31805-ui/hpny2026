@@ -200,19 +200,23 @@
             startBtn.onclick = () => {
                 startBtn.style.display = "none";
                 countdownNumber.style.display = "block";
+
+                count = 3;
                 countdownNumber.innerText = count;
 
                 countdownTimer = setInterval(() => {
                     count--;
-                    countdownNumber.innerText = count;
 
                     if (count === 0) {
                         clearInterval(countdownTimer);
                         countdownScreen.style.display = "none";
                         startWords();
+                    } else {
+                        countdownNumber.innerText = count;
                     }
                 }, 1000);
             };
+
 
             /* ===== HIỆU ỨNG CHỮ ===== */
             const words = ["CHÚC", "MỪNG", "NĂM", "MỚI"];

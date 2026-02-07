@@ -44,6 +44,16 @@
         <source src="Fireworks with Sound Effects.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Âm thanh countdown -->
+    <audio id="countSound">
+        <source src="count down 321.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Âm thanh chúc mừng năm mới -->
+    <audio id="happyNewYearSound">
+        <source src="happy-new-year.mp3" type="audio/mpeg">
+    </audio>
+
 
     <script>
         let fireworkInterval = null;
@@ -52,24 +62,19 @@
         /* Phát nhạc */
         const music = document.getElementById("music");
         music.volume = 0.1;
-
-        let musicStarted = false;
-
+        music.muted = true;   // 🔒 KHÓA TIẾNG BAN ĐẦU
         let musicUnlocked = false;
 
         function unlockMusic() {
             if (!musicUnlocked) {
-                // play + pause cực nhanh để unlock autoplay mobile
-                music.play().then(() => {
-                    music.pause();
-                    music.currentTime = 0;
-                    musicUnlocked = true;
-                }).catch(() => { });
+                music.muted = true; // vẫn mute
+                musicUnlocked = true;
             }
         }
 
         function playMusic() {
             if (musicUnlocked) {
+                music.muted = false; // 🔓 MỞ TIẾNG
                 music.play().catch(() => { });
             }
         }
@@ -78,6 +83,13 @@
 
         const fireworkSound = document.getElementById("fireworkSound");
         fireworkSound.volume = 0.08; // âm lượng pháo hoa
+
+        const countSound = document.getElementById("countSound");
+        countSound.volume = 0.4;
+
+        const happySound = document.getElementById("happyNewYearSound");
+        happySound.volume = 0.5;
+
 
 
 
@@ -211,28 +223,38 @@
 
             /* BẤM START */
             startBtn.onclick = () => {
-                // 🔥 BẮT NHẠC NGAY TẠI ĐÂY (hợp lệ trên mobile)
-                unlockMusic(); // 🔓 chỉ unlock, CHƯA phát
+                unlockMusic();
 
                 startBtn.style.display = "none";
                 countdownNumber.style.display = "block";
 
-
                 count = 3;
                 countdownNumber.innerText = count;
+
+                // 🔊 PHÁT ÂM COUNTDOWN 1 LẦN DUY NHẤT
+                countSound.currentTime = 0;
+                countSound.play().catch(() => { });
 
                 countdownTimer = setInterval(() => {
                     count--;
 
-                    if (count === 0) {
-                        clearInterval(countdownTimer);
-                        countdownScreen.style.display = "none";
-                        startWords();
-                    } else {
+                    if (count > 0) {
                         countdownNumber.innerText = count;
+                    } else {
+                        clearInterval(countdownTimer);
+
+                        countdownScreen.style.display = "none";
+
+                        // 🔊 tiếng chúc mừng
+                        happySound.currentTime = 0;
+                        happySound.play().catch(() => { });
+
+                        startWords();
                     }
                 }, 1000);
             };
+
+
 
 
             /* ===== HIỆU ỨNG CHỮ ===== */
